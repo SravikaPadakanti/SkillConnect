@@ -56,12 +56,12 @@
 
 | Layer | Technology |
 |-------|------------|
-| **Frontend** | React 18, Vite, Tailwind CSS, Zustand |
+| **Frontend** | React 18, Vite, Tailwind CSS|
 | **Backend** | Node.js, Express.js |
 | **Database** | MongoDB with Mongoose |
 | **Real-time** | Socket.io, WebRTC |
 | **Auth** | JWT + bcrypt |
-| **AI** | Google Gemini API / OpenAI API |
+| **AI** | Google Gemini API|
 | **Validation** | Zod, express-validator |
 
 ---
