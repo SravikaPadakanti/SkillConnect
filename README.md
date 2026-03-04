@@ -54,7 +54,7 @@
 
 ## 🏗️ System Architecture
 
-![System Architecture](System Architecture.png)
+![System Architecture](SystemArchitecture.png)
 
 The app follows a **3-tier architecture**:
 
