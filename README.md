@@ -52,6 +52,17 @@
 
 ---
 
+## 🏗️ System Architecture
+
+![System Architecture](System Architecture.png)
+
+The app follows a **3-tier architecture**:
+
+- **Client Tier** — React frontend communicates with the server via REST (Axios) and WebSocket (Socket.io). WebRTC handles peer-to-peer video directly between users in the Classroom.
+- **Server Tier** — Express.js processes API requests, manages JWT auth, handles all Socket.io events (chat, whiteboard, signaling, notifications), and calls the Google Gemini API for the AI chatbot.
+- **Data Tier** — MongoDB stores all persistent data via Mongoose (Users, Sessions, Requests, Reviews, Notifications, Blogs).
+
+---
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
