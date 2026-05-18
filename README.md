@@ -8,7 +8,6 @@
 
 ## 📸 Screenshots
 
-
 | Home Page | Browse Skills |
 |-----------|---------------|
 | ![Home](screenshots/home.png) | ![Browse](screenshots/browse.png) |
@@ -20,8 +19,6 @@
 ---
 
 <!--## 🎬 Video Demo-->
-
-
 <!-- [![Watch Demo](screenshots/thumbnail.png)](https://your-video-link-here) -->
 
 ---
@@ -40,15 +37,16 @@
 ## 🚀 Features
 
 - 🔐 JWT authentication with secure bcrypt password hashing
-- 👤 User profiles with skills, bio, and reviews
-- 🔍 Browse and search skill providers
-- 📅 Create, manage, and join learning sessions
-- 📬 Send and respond to skill requests
-- 🎥 Live Classroom with WebRTC video, shared whiteboard & real-time chat
+- 👤 User profiles with skills, bio, education, availability, and social links
+- 🔍 Browse and search skill providers with match scores
+- 📬 Send, accept, reject, or reschedule skill swap requests
+- 📅 Schedule online or offline sessions with full status tracking
+- 🎥 Live Classroom with WebRTC video/audio, shared whiteboard & real-time chat
+- 📝 Knowledge tests — tutors can create MCQ assessments for learners post-session
 - 🤖 AI Chatbot assistant (Google Gemini / OpenAI)
-- ⭐ Review and rating system
-- 🔔 Real-time notifications
-- 📝 Community blog section
+- ⭐ Review and rating system after completed sessions
+- 🔔 Real-time in-app notifications via Socket.IO
+- 📰 Community blog section for sharing knowledge
 
 ---
 
@@ -60,20 +58,24 @@ The app follows a **3-tier architecture**:
 
 - **Client Tier** — React frontend communicates with the server via REST (Axios) and WebSocket (Socket.io). WebRTC handles peer-to-peer video directly between users in the Classroom.
 - **Server Tier** — Express.js processes API requests, manages JWT auth, handles all Socket.io events (chat, whiteboard, signaling, notifications), and calls the Google Gemini API for the AI chatbot.
-- **Data Tier** — MongoDB stores all persistent data via Mongoose (Users, Sessions, Requests, Reviews, Notifications, Blogs).
+- **Data Tier** — MongoDB stores all persistent data via Mongoose (Users, Profiles, Sessions, Requests, Reviews, Notifications, Blogs).
 
 ---
+
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
 |-------|------------|
-| **Frontend** | React 18, Vite, Tailwind CSS|
+| **Frontend** | React 18, Vite, Tailwind CSS, React Router v6 |
+| **State Management** | Zustand |
+| **HTTP Client** | Axios |
 | **Backend** | Node.js, Express.js |
 | **Database** | MongoDB with Mongoose |
-| **Real-time** | Socket.io, WebRTC |
+| **Real-time** | Socket.IO, WebRTC |
 | **Auth** | JWT + bcrypt |
-| **AI** | Google Gemini API|
+| **AI** | Google Gemini API |
 | **Validation** | Zod, express-validator |
+| **Forms** | React Hook Form |
 
 ---
 
@@ -82,21 +84,73 @@ The app follows a **3-tier architecture**:
 ```
 SkillConnect/
 ├── backend/
-│   └── src/
-│       ├── config/        # DB connection
-│       ├── middleware/    # JWT auth middleware
-│       ├── models/        # Mongoose schemas (User, Session, Request, Review…)
-│       ├── routes/        # REST API routes
-│       ├── services/      # Socket service
-│       └── server.js      # Entry point
+│   ├── src/
+│   │   ├── config/
+│   │   │   └── db.js               # MongoDB connection
+│   │   ├── middleware/
+│   │   │   └── auth.js             # JWT auth middleware
+│   │   ├── models/
+│   │   │   ├── User.js             # Auth credentials
+│   │   │   ├── Profile.js          # Skills, bio, social links
+│   │   │   ├── Request.js          # Skill swap requests
+│   │   │   ├── Session.js          # Scheduled sessions
+│   │   │   ├── Test.js             # MCQ assessments
+│   │   │   ├── Review.js           # Session reviews
+│   │   │   ├── Notification.js     # In-app notifications
+│   │   │   └── Blog.js             # Community blog posts
+│   │   ├── routes/
+│   │   │   ├── auth.js             # Register / Login
+│   │   │   ├── profiles.js         # Profile CRUD & search
+│   │   │   ├── requests.js         # Skill swap request management
+│   │   │   ├── sessions.js         # Session scheduling & status
+│   │   │   ├── tests.js            # Test creation & attempts
+│   │   │   ├── reviews.js          # Post-session reviews
+│   │   │   ├── notifications.js    # Notification fetch & mark-read
+│   │   │   └── blogs.js            # Blog CRUD
+│   │   ├── services/
+│   │   │   └── socketService.js    # Shared Socket.IO instance
+│   │   └── server.js               # App entry point, Socket.IO handlers
+│   ├── .env.example
+│   └── package.json
 │
-└── frontend/
-    └── src/
-        ├── api/           # Axios instance & Socket.io setup
-        ├── components/    # Navbar, Footer, Layout, Chatbot
-        ├── pages/         # All route-level pages
-        ├── store/         # Zustand auth store
-        └── App.jsx        # Route definitions
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── api/
+│   │   │   ├── axios.js            # Axios instance with auth header
+│   │   │   └── socket.js           # Socket.IO client setup
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   ├── Layout.jsx
+│   │   │   └── Chatbot.jsx         # AI chatbot widget
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   ├── Browse.jsx          # Search & filter profiles
+│   │   │   ├── Profile.jsx         # View another user's profile
+│   │   │   ├── MyProfile.jsx       # Edit own profile
+│   │   │   ├── Requests.jsx        # Manage incoming/outgoing requests
+│   │   │   ├── Sessions.jsx        # Session list
+│   │   │   ├── SessionDetail.jsx   # Session info & actions
+│   │   │   ├── Classroom.jsx       # Live video + whiteboard + chat
+│   │   │   ├── Reviews.jsx
+│   │   │   ├── Notifications.jsx
+│   │   │   ├── Blogs.jsx
+│   │   │   ├── BlogPost.jsx
+│   │   │   ├── About.jsx
+│   │   │   ├── HowItWorks.jsx
+│   │   │   ├── Login.jsx
+│   │   │   └── Signup.jsx
+│   │   ├── store/
+│   │   │   └── authStore.js        # Zustand auth store
+│   │   ├── App.jsx                 # Routes definition
+│   │   └── main.jsx
+│   └── package.json
+│
+├── install-backend.bat
+├── install-frontend.bat
+├── run-backend.bat
+└── run-frontend.bat
 ```
 
 ---
@@ -105,8 +159,8 @@ SkillConnect/
 
 ### Prerequisites
 
-- Node.js v18+
-- MongoDB (Atlas or local)
+- [Node.js](https://nodejs.org/) v18+
+- A [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cluster (or local MongoDB instance)
 
 ### 1. Clone the repository
 
@@ -130,11 +184,20 @@ PORT=5000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 NODE_ENV=development
+CLIENT_ORIGIN=http://localhost:3000
 ```
 
+> ⚠️ Never commit your `.env` file. It is already listed in `.gitignore`.
+
 ```bash
+# Development (with auto-reload)
 npm run dev
+
+# Production
+npm start
 ```
+
+The server will run on `http://localhost:5000`.
 
 ### 3. Setup the Frontend
 
@@ -144,31 +207,79 @@ npm install
 npm run dev
 ```
 
-> 🪟 **Windows users:** Use the included `.bat` scripts — `install-backend.bat`, `run-backend.bat`, `install-frontend.bat`, `run-frontend.bat`.
+> 🪟 **Windows users:** Double-click the provided batch scripts in the root folder:
+> 1. `install-backend.bat` — Installs backend dependencies
+> 2. `install-frontend.bat` — Installs frontend dependencies
+> 3. `run-backend.bat` — Starts the backend server
+> 4. `run-frontend.bat` — Starts the frontend dev server
 
 The app will be available at `http://localhost:5173` by default.
 
 ---
 
-## 🔌 API Overview
+## 🔌 API Reference
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | Register a new user |
-| POST | `/api/auth/login` | Login and get JWT |
-| GET | `/api/profiles` | Browse all user profiles |
-| GET/POST | `/api/sessions` | List or create sessions |
-| GET/POST | `/api/requests` | Manage skill requests |
-| GET | `/api/notifications` | Get user notifications |
-| GET/POST | `/api/reviews` | Reviews for a user |
-| GET/POST | `/api/blogs` | Community blog posts |
-| POST | `/api/chat` | AI chatbot endpoint |
+All endpoints are prefixed with `/api`.
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| `POST` | `/auth/register` | No | Register a new user |
+| `POST` | `/auth/login` | No | Login and get JWT |
+| `GET` | `/profiles` | No | Browse & search profiles |
+| `GET` | `/profiles/:userId` | No | View a user's profile |
+| `PUT` | `/profiles` | Yes | Update own profile |
+| `POST` | `/requests` | Yes | Send a skill swap request |
+| `GET` | `/requests` | Yes | Get incoming & outgoing requests |
+| `PATCH` | `/requests/:id` | Yes | Accept / reject / reschedule |
+| `POST` | `/sessions` | Yes | Create a session from accepted request |
+| `GET` | `/sessions` | Yes | List user's sessions |
+| `GET` | `/sessions/:id` | Yes | Get session details |
+| `PATCH` | `/sessions/:id/status` | Yes | Update session status |
+| `POST` | `/tests` | Yes | Create a test for a session |
+| `POST` | `/tests/:id/attempt` | Yes | Submit test answers |
+| `POST` | `/reviews` | Yes | Submit a session review |
+| `GET` | `/notifications` | Yes | Fetch notifications |
+| `PATCH` | `/notifications/:id/read` | Yes | Mark notification as read |
+| `GET` | `/blogs` | No | List blog posts |
+| `POST` | `/blogs` | Yes | Create a blog post |
+| `POST` | `/chat` | Yes | AI chatbot endpoint |
+| `GET` | `/health` | No | Server health check |
+
+---
+
+## 📡 Real-Time Events (Socket.IO)
+
+Authentication is required via a JWT token passed in the socket handshake.
+
+| Event | Direction | Description |
+|-------|-----------|-------------|
+| `join_notifications` | Client → Server | Subscribe to personal notification room |
+| `join_room` | Client → Server | Join a classroom session room |
+| `leave_room` | Client → Server | Leave a classroom session room |
+| `chat_message` | Bidirectional | Send/receive in-session chat messages |
+| `whiteboard_draw` | Bidirectional | Broadcast whiteboard strokes |
+| `whiteboard_clear` | Bidirectional | Clear the shared whiteboard |
+| `webrtc_offer` | Bidirectional | WebRTC connection offer |
+| `webrtc_answer` | Bidirectional | WebRTC connection answer |
+| `webrtc_ice` | Bidirectional | ICE candidate exchange |
+
+---
+
+## 🌐 Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PORT` | No | Server port (default: `5000`) |
+| `MONGODB_URI` | Yes | MongoDB connection string |
+| `JWT_SECRET` | Yes | Secret key for signing JWTs |
+| `NODE_ENV` | No | `development` or `production` |
+| `CLIENT_ORIGIN` | No | Frontend URL for CORS (default: `http://localhost:3000`) |
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are allowed and always welcome! Whether it's fixing a bug, suggesting a feature, improving docs, or anything in between — feel free to open an issue or submit a pull request. Every contribution, big or small, is appreciated.
+Contributions are always welcome! Whether it's fixing a bug, suggesting a feature, improving docs, or anything in between — feel free to open an issue or submit a pull request. Every contribution, big or small, is appreciated.
 
 1. Fork the repo
 2. Create your branch: `git checkout -b feature/your-feature`
