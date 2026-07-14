@@ -16,13 +16,13 @@
 |----------------|--------------|
 | ![Chat bot](Images/Chat_Bot.png) | ![Profile](Images/Profile_Page.png) |
 
-| How It Works | Our Mission |
+| Login Page| Our Mission |
 |----------------|--------------|
-| ![How It Works??](Images/How_it_works_page.png) | ![Login](Images/Our_Mission.png) |
+| ![Login](Images/Login_Page.png) | ![Our Mission](Images/Our_Mission.png) |
 
 | How It Works | How It Works |
 |----------------|--------------|
-| ![How It Works??](Images/How_it_works_page.png) | ![Login](Images/How_it_works_Page_2.png)) |
+| ![How It Works??](Images/How_it_works_page.png) | ![How It Works](Images/How_it_works_Page_2.png)) |
 
 ---
 
