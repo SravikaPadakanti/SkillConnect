@@ -18,11 +18,11 @@
 
 | Login Page| Our Mission |
 |----------------|--------------|
-| ![Login](Images/Login_Page.png) | ![Our Mission](Images/Our_Mission.png) |
+| ![Login](Images/Login_page.png) | ![Our Mission](Images/Our_Mission.png) |
 
 | How It Works | How It Works |
 |----------------|--------------|
-| ![How It Works??](Images/How_it_works_page.png) | ![How It Works](Images/How_it_works_Page_2.png)) |
+| ![How It Works??](Images/How_it_works_page.png) | ![How It Works](Images/How_it_works_Page_2.png) |
 
 ---
 
