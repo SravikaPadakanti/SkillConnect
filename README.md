@@ -14,7 +14,11 @@
 
 | Chat Bot | User Profile |
 |----------------|--------------|
-| ![Chat bot](screenshots/Images/Chaatbot.png) | ![Profile](Images/Profile_Page.png) |
+| ![Chat bot](Images/Chat_Bot.png) | ![Profile](Images/Profile_Page.png) |
+
+| How It Works | Login Page |
+|----------------|--------------|
+| ![How It Works??](Images/How_it_works_page.png) | ![Login](Images/Login_page.png) |
 
 ---
 
