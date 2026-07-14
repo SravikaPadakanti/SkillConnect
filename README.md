@@ -10,11 +10,11 @@
 
 | Home Page | Browse Skills |
 |-----------|---------------|
-| ![Home](screenshots/home.png) | ![Browse](screenshots/browse.png) |
+| ![Home](Images/Home_Page.png) | ![Browse](Images/Browse_Skills_Exchange_Profiles.png) |
 
-| Live Classroom | User Profile |
+| Chat Bot | User Profile |
 |----------------|--------------|
-| ![Classroom](screenshots/classroom.png) | ![Profile](screenshots/profile.png) |
+| ![Chat bot](screenshots/Images/Chaatbot.png) | ![Profile](Images/Profile_Page.png) |
 
 ---
 
