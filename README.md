@@ -20,7 +20,7 @@
 |----------------|--------------|
 | ![How It Works??](Images/How_it_works_page.png) | ![Login](Images/Our_Mission.png) |
 
-| How It Works | 
+| How It Works | How It Works |
 |----------------|--------------|
 | ![How It Works??](Images/How_it_works_page.png) | ![Login](Images/How_it_works_Page_2.png)) |
 
